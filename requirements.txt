@@ -2,6 +2,9 @@ fastapi
 uvicorn
 sqlalchemy
 python-dotenv
-nltk
 sentence-transformers
 psycopg2-binary
+tensorflow
+tensorflow-hub
+tensorflow-text
+nltk
