@@ -6,3 +6,4 @@ transformers
 torch
 sentence-transformers
 nltk
+redis
