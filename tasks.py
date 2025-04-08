@@ -24,7 +24,7 @@ SessionLocal = sessionmaker(bind=engine)
 model = SentenceTransformer(EMBEDDING_MODEL_NAME)
 
 # Descargar punkt tokenizer (solo la primera vez)
-nltk.download('punkt')
+nltk.download('punkt', download_dir='/home/danfuentes04/nltk_data')
 
 def process_uploaded_file(document_id):
     db = SessionLocal()
