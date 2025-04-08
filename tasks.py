@@ -7,7 +7,12 @@ from models import Document  # Tu modelo de base de datos
 import nltk
 from sentence_transformers import SentenceTransformer
 from dotenv import load_dotenv
-
+import nltk
+nltk.download('punkt')
+nltk.download('punkt_tab')
+nltk.download('punkt')
+nltk.download('wordnet')
+nltk.download('omw-1.4')
 # Cargar variables de entorno
 load_dotenv()
 
