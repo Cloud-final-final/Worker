@@ -1,9 +1,8 @@
 fastapi
 uvicorn
-sqlalchemy
+SQLAlchemy
+psycopg2-binary
 python-dotenv
 nltk
-tensorflow
-tensorflow-hub
-tensorflow-text
+sentence-transformers
 requests
