@@ -1,30 +1,31 @@
 import os
+import shutil
+import nltk
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Document  # Tu modelo de base de datos
-import nltk
-from sentence_transformers import SentenceTransformer
 
 # Cargar variables de entorno
 from dotenv import load_dotenv
 load_dotenv()
-import nltk
-nltk.data.path.append('/home/danfuentes04/nltk_data')
+
+import tensorflow as tf
+import tensorflow_hub as hub
+import tensorflow_text  # Import necesario aunque no lo uses directamente
 
 # Configuraciones
 DATABASE_URL = os.getenv("DATABASE_URL")
 NFS_MOUNT_PATH = os.getenv("NFS_MOUNT_PATH")
-EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL")
 
 # Inicializar SQLAlchemy
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine)
 
-# Inicializar modelo de embeddings
-model = SentenceTransformer(EMBEDDING_MODEL_NAME)
+# Inicializar modelo de embeddings (Universal Sentence Encoder)
+embed = hub.load("https://tfhub.dev/google/universal-sentence-encoder/4")
 
-# Descargar punkt tokenizer (solo la primera vez)
-nltk.download('punkt', download_dir='/home/danfuentes04/nltk_data')
+# Descargar tokenizer
+nltk.download('punkt')
 
 def process_uploaded_file(document_id):
     db = SessionLocal()
@@ -47,10 +48,11 @@ def process_uploaded_file(document_id):
         # Partir en chunks
         chunks = nltk.tokenize.sent_tokenize(text)
 
-        # Obtener embeddings
-        embeddings = model.encode(chunks).tolist()
+        # Obtener embeddings usando USE
+        embeddings_tensor = embed(chunks)
+        embeddings = embeddings_tensor.numpy().tolist()
 
-        # Guardar cada chunk en el NFS
+        # Guardar cada chunk como archivo .txt
         for i, chunk in enumerate(chunks):
             chunk_filename = f"chunk_{i}.txt"
             chunk_path = os.path.join(file_folder, chunk_filename)
@@ -66,5 +68,6 @@ def process_uploaded_file(document_id):
 
     except Exception as e:
         print(f"Error procesando documento: {e}")
+
     finally:
         db.close()
