@@ -1,24 +1,18 @@
 import os
-from celery import Celery
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Document  # Tu modelo de base de datos
 import nltk
 from sentence_transformers import SentenceTransformer
-import shutil
 
 # Cargar variables de entorno
 from dotenv import load_dotenv
 load_dotenv()
 
 # Configuraciones
-REDIS_BROKER_URL = os.getenv("REDIS_BROKER_URL")
 DATABASE_URL = os.getenv("DATABASE_URL")
 NFS_MOUNT_PATH = os.getenv("NFS_MOUNT_PATH")
 EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL")
-
-# Inicializar Celery
-app = Celery('worker', broker=REDIS_BROKER_URL)
 
 # Inicializar SQLAlchemy
 engine = create_engine(DATABASE_URL)
@@ -27,10 +21,9 @@ SessionLocal = sessionmaker(bind=engine)
 # Inicializar modelo de embeddings
 model = SentenceTransformer(EMBEDDING_MODEL_NAME)
 
-# Descargar punkt tokenizer
+# Descargar punkt tokenizer (solo la primera vez)
 nltk.download('punkt')
 
-@app.task(name="tasks.process_uploaded_file")
 def process_uploaded_file(document_id):
     db = SessionLocal()
 

@@ -1,9 +1,7 @@
-celery
+fastapi
+uvicorn
 sqlalchemy
-psycopg2-binary
 python-dotenv
-transformers
-torch
-sentence-transformers
 nltk
-redis
+sentence-transformers
+psycopg2-binary
