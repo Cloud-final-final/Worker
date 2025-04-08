@@ -8,6 +8,8 @@ from sentence_transformers import SentenceTransformer
 # Cargar variables de entorno
 from dotenv import load_dotenv
 load_dotenv()
+import nltk
+nltk.data.path.append('/home/danfuentes04/nltk_data')
 
 # Configuraciones
 DATABASE_URL = os.getenv("DATABASE_URL")
