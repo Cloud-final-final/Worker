@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  worker:
+    build: .
+    container_name: worker
+    ports:
+      - "8001:8001"
+    volumes:
+      - /mnt/nfs:/mnt/nfs  # Monta el NFS en el contenedor
+    environment:
+      - DATABASE_URL=postgresql://myuser:mypassword@34.170.95.108:5432/mydatabase
+      - NFS_MOUNT_PATH=/mnt/nfs
+      - EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
+    restart: unless-stopped
