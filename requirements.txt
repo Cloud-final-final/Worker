@@ -6,3 +6,4 @@ python-dotenv
 nltk
 sentence-transformers
 requests
+google-cloud-storage

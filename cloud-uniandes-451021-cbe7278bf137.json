@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "cloud-uniandes-451021",
+  "private_key_id": "cbe7278bf1370ed5b2501e0ae72ddecfef1d4982",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCdShca+lU/3d2O\n1R3GS5hGdlb9RRtADpPdeSFomMSk6pL+4SwG8IbvJRqQomwpMZ7nq/0iz57S4g75\nVL8ekhHN8O5Z0SZ4HnF9we4sdOAnBnOMQgh2ZnnISGRPR08te18dUHzTY/xU5R7z\njfzpuAwjFr4Zg7t1PZolyGYgFmktNyoUG6vAV0GcNtA3jXGNCSN6qh08+RYaQBE7\nMLbbHxoW+mS1JUFuFBoxKC1uOlUiI98r93ouw5Y6r0fgIO8bAgYHVWeiIcSyPWVV\nWaAaX7pRhaobqbUzO6i+ZDGaawqjU4uBeOO0g3ZUM9txULHd/7lXf+bH1HwiuqkA\n590gmxhrAgMBAAECggEAShqYhSzQ0jy4wCz3ELAX54akmEGhQ446qvsBOvLSnrIn\nnC7BG+nhYLU17VOgqs3GhHa61dZEiS1ZCa4cNw5xlfm/ihBoU+pf5PRjvo03+Brp\ngHix3PqNwMcef11k19RKrRh5Huz5+pNSAERyljiQe02hNYsjW+qwf8GJH+//EH4x\nx29Us9mjSfpW85oafdQ+z/Gi5oOdY5V21RhF2RtWX+/PYuNaAYqkRT1okxzEYziX\nIpfOGWfNmYngZX7oYy8NxgfSkHig7XdgR5fPaH53g/+M+kg+YfEDDw3HnPatVUIP\n+WVnq6VwT69PCWrG8sRZ2SMhJWFPLBr3hhIwR9SKqQKBgQDZObIvpA8qkfi8Yd0p\nDAzg3kF29YReFGnofWRKwyNxcnB8BbExD3lgVdRaOUTdYmkh4GSmKA/ViSWWkOyv\nXXLGHmPgtzanCEfjDpoUvdnYvpqSQsPFusI1TfaXV8jd+xvOItbsw86UmTAnSrTQ\nNBed0qicdcs4K6FhPUFtPBC1cwKBgQC5XZFmsW1i5w7jqOhvExffXXA3aMtXQoqA\n670VjV74OxdNdkSJPw449uCUkUXx/jHaygzxKMqz0ZmHdg270fGXNudh0AQwYVjk\nZ+dQBx8gGOsgY3LnRfhXjTD36htolN8Pdct7UdG7IVvXIhqvxpujRORWkPp5RxYA\nCJWumA+TKQKBgQDJDpj5dX1AJrm2C1K7clbdL3oiVB6/QV/Be4X/mNxOXeD1OgOG\naE8stmSFWep+il7KpzohfIUjXPx4fw1DR1g7PdeuH4YrVgPLijFdL1faQJkq9Tbk\n5fZphg7Oh8b4hzp2MlMB9D5Z1ev3AjOXXg/Z2SiNII4HIIMPULYlF+pTNwKBgGXW\n+Fl5RWW/GDkPxZOw476+MTbgBkeMsVefLKU4pGKw5F6UiZb147R8PmqhXdJUG8Pe\nmjmsdaFRmI4J2AXGlHrFmV3t0T9bXGEwjK81Gm6iAhwrRye1E3nWgn7SSfitQdfW\nmdLI4vdynmiVvh+weDW9Vc4RnOsgmP+vt7zSokvxAoGAOvLQJgh2WeWc6Z1NgLDP\nAgvfaYHuoYx8lSlR/CT6Dyl0Ej8KWfz8HEJdCRx6qg88x9uYUpuPcx0ucogbIQla\nI95yddG6+RJW0OmMyH158Lf6PhXWFSF9EmRo5oYauq+4aF5n8gofi2T8dgAJRe47\ns75VzH3BTqct5HnlKgnOFt8=\n-----END PRIVATE KEY-----\n",
+  "client_email": "worker-storage-access@cloud-uniandes-451021.iam.gserviceaccount.com",
+  "client_id": "105534671958965568950",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/worker-storage-access%40cloud-uniandes-451021.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

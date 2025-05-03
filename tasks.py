@@ -3,49 +3,65 @@
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import Document  # Tu modelo de base de datos
+from models import Document
 import nltk
 from sentence_transformers import SentenceTransformer
 from dotenv import load_dotenv
-import nltk
-nltk.download('punkt')
-nltk.download('punkt_tab')
+from google.cloud import storage
+import tempfile
+
+# Descargar recursos NLTK
 nltk.download('punkt')
 nltk.download('wordnet')
 nltk.download('omw-1.4')
+
 # Cargar variables de entorno
 load_dotenv()
 
 # Configuraciones
 DATABASE_URL = os.getenv("DATABASE_URL")
-NFS_MOUNT_PATH = os.getenv("NFS_MOUNT_PATH")
+GCS_BUCKET_NAME = os.getenv("GCS_BUCKET_NAME")
+GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
 # Inicializar SQLAlchemy
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine)
 
-# Inicializar modelo de embeddings (ligero)
+# Inicializar cliente de GCS
+storage_client = storage.Client()
+bucket = storage_client.bucket(GCS_BUCKET_NAME)
+
+# Inicializar modelo de embeddings
 model = SentenceTransformer(EMBEDDING_MODEL_NAME)
 
-# Descargar punkt tokenizer (esto lo haces UNA VEZ manualmente antes)
-# nltk.download('punkt')  # Ya no lo dejes aquí para no depender de internet en producción
 
 def process_uploaded_file(document_id):
     db = SessionLocal()
 
     try:
-        document = db.query(Document).filter(Document.id == document_id).first()
+        document = db.query(Document).filter(
+            Document.id == document_id).first()
         if not document:
             print(f"Documento {document_id} no encontrado.")
             return
 
-        file_folder = document.file_path
-        original_file = os.path.join(file_folder, document.filename)
+        # Obtener blob de GCS
+        blob = bucket.blob(document.file_path)
 
-        with open(original_file, "r", encoding="utf-8") as f:
-            text = f.read()
+        # Crear archivo temporal
+        with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+            # Descargar contenido al archivo temporal
+            blob.download_to_filename(temp_file.name)
 
+            # Leer el archivo
+            with open(temp_file.name, "r", encoding="utf-8") as f:
+                text = f.read()
+
+        # Eliminar archivo temporal
+        os.unlink(temp_file.name)
+
+        # Procesar el texto
         chunks = nltk.tokenize.sent_tokenize(text)
         embeddings = model.encode(chunks).tolist()
 
@@ -53,12 +69,11 @@ def process_uploaded_file(document_id):
         document.embeddings = embeddings
         db.commit()
 
-        # Guardar chunks como archivos
+        # Guardar chunks como archivos en GCS
         for i, chunk in enumerate(chunks):
-            chunk_filename = f"chunk_{i}.txt"
-            chunk_path = os.path.join(file_folder, chunk_filename)
-            with open(chunk_path, "w", encoding="utf-8") as cf:
-                cf.write(chunk)
+            chunk_filename = f"{document.file_path}/chunks/chunk_{i}.txt"
+            chunk_blob = bucket.blob(chunk_filename)
+            chunk_blob.upload_from_string(chunk)
 
         print(f"Documento {document.filename} procesado exitosamente.")
 
