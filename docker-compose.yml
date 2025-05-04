@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  worker:
+    build: .
+    container_name: worker_service
+    env_file:
+      - .env  # Load environment variables from .env file
+    volumes:
+      # Mount the key.json file into the container
+      - ./key.json:/app/key.json:ro
+      # Mount the current directory for development (optional, remove for production)
+      # - .:/app
+    # Set environment variable for Google Credentials explicitly (already set in Dockerfile, but good practice here too)
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/key.json
+      # Ensure DATABASE_URL and GCS_BUCKET_NAME are passed from .env
+      # - DATABASE_URL=${DATABASE_URL}
+      # - GCS_BUCKET_NAME=${GCS_BUCKET_NAME}
+    # The command is defined in the Dockerfile, so no need to repeat unless overriding
+    # command: ["python", "tasks.py"]
+    restart: unless-stopped
+
+# If you were using a local database container, you would define it here
+# volumes:
+#   postgres_data:
+
+# networks:
+#   app_network:
