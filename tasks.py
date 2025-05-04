@@ -1,9 +1,7 @@
-# tasks.py
-
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import Document
+from models import Document, Base
 import nltk
 from sentence_transformers import SentenceTransformer
 from dotenv import load_dotenv
@@ -27,6 +25,9 @@ EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 # Inicializar SQLAlchemy
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine)
+
+# Move this line HERE - after engine is initialized
+Base.metadata.create_all(bind=engine)
 
 # Inicializar cliente de GCS
 storage_client = storage.Client()

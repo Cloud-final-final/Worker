@@ -5,3 +5,4 @@ nltk
 sentence-transformers
 python-dotenv
 google-cloud-storage
+psycopg2-binary
