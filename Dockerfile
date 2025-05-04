@@ -1,29 +1,22 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
+FROM python:3.11.6
 
-# Set the working directory in the container
 WORKDIR /app
 
-# Copy the requirements file into the container at /app
+# Copy requirements and install dependencies
 COPY requirements.txt .
-
-# Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Download NLTK data
-RUN python -m nltk.downloader punkt wordnet omw-1.4
+# Copy application code - THIS LINE NEEDS FIXING
+COPY app.py models.py tasks.py ./
 
-# Copy the rest of the application code into the container at /app
-COPY . .
+# Copy environment file 
+COPY .env .
 
-# Make port 80 available to the world outside this container (if needed, adjust if not a web service)
-# EXPOSE 80 
+# Download NLTK data during build
+RUN python -c "import nltk; nltk.download('punkt'); nltk.download('wordnet'); nltk.download('omw-1.4')"
 
-# Define environment variable for Google Credentials (will be set in docker-compose)
-ENV GOOGLE_APPLICATION_CREDENTIALS=/app/key.json
+# Expose the port FastAPI will run on
+EXPOSE 8001
 
-# Set the command to run the application (adjust if needed)
-# Assuming tasks.py needs to be run directly or via a task runner
-# This CMD might need adjustment based on how the worker is actually invoked.
-# For now, let's keep it simple. If it's meant to be run with arguments or via Celery, update accordingly.
-CMD ["python", "tasks.py"]
+# Command to run FastAPI server
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8001"]

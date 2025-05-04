@@ -1,9 +1,7 @@
 fastapi
 uvicorn
-SQLAlchemy
-psycopg2-binary
-python-dotenv
+sqlalchemy
 nltk
 sentence-transformers
-requests
+python-dotenv
 google-cloud-storage
