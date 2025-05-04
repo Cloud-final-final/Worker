@@ -8,5 +8,6 @@ services:
     env_file:
       - .env
     restart: unless-stopped
-    volumes:
-      - .:/app
+    # Comenta o elimina la línea de volúmenes
+    # volumes:
+    #   - .:/app

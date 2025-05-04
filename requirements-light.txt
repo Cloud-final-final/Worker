@@ -1,0 +1,9 @@
+google-cloud-pubsub>=2.13.0
+google-cloud-storage==2.10.0
+psycopg2-binary==2.9.6
+sqlalchemy==2.0.17
+nltk==3.8.1
+python-dotenv==1.0.0
+# Versiones compatibles específicas
+numpy==1.23.5
+scikit-learn==1.2.2
